@@ -1,0 +1,36 @@
+name: fake_currency
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  cupertino_icons: ^1.0.8
+  device_preview: ^1.1.0
+  flutter:
+    sdk: flutter
+  flutter_native_splash: ^2.4.6
+  flutter_riverpod: ^2.6.1
+  flutter_screenutil: ^5.9.3
+  flutter_svg: ^2.1.0
+  google_fonts: ^6.2.1
+  image_picker: ^1.1.2
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/splash.png
+
+flutter_native_splash:
+  Color: "#42a5f5"
+  background_image: "assets/images/splash.png"
+  android_12:
+    image: assets/images/splash.png
