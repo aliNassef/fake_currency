@@ -12,8 +12,11 @@ class DetectionViewBody extends StatelessWidget {
       children: [
         SizedBox(height: context.height * .05),
         Container(
+          height: context.height * .2,
+          width: context.width,
           decoration: BoxDecoration(
             image: DecorationImage(
+              fit: BoxFit.cover,
               image: AssetImage('assets/images/two_hundred.png'),
             ),
             borderRadius: BorderRadius.circular(20),
@@ -21,7 +24,9 @@ class DetectionViewBody extends StatelessWidget {
           ),
         ),
         SizedBox(height: context.height * .25),
-        Container(
+        GestureDetector(
+          onTap: () {},
+          child: Container(
           padding: EdgeInsets.all(20),
           alignment: Alignment.center,
           decoration: BoxDecoration(
@@ -40,6 +45,7 @@ class DetectionViewBody extends StatelessWidget {
               ),
             ],
           ),
+         ),
         ),
       ],
     );

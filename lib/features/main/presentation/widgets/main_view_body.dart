@@ -20,7 +20,7 @@ class MainViewBody extends StatelessWidget {
           'MCD',
           style: AppStyles.bold96.copyWith(color: AppColors.secondaryColor),
         ),
-        SizedBox(height: context.height * .2),
+        SizedBox(height: context.height * .16),
         Row(
           spacing: 20.w,
           children: [
@@ -29,6 +29,7 @@ class MainViewBody extends StatelessWidget {
                 onTap: () => ImagePickerHelper.openCamera(onGet: (file) {}),
                 child: Container(
                   padding: EdgeInsets.all(20),
+                  height: 240.h,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: AppColors.secondaryColor,
@@ -37,6 +38,7 @@ class MainViewBody extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
+                    spacing: 5.h,
                     children: [
                       SvgPicture.asset('assets/icons/camera_icon.svg'),
                       Text(
@@ -54,6 +56,7 @@ class MainViewBody extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => ImagePickerHelper.openGallery(onGet: (file) {}),
                 child: Container(
+                  height: 240.h,
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -63,6 +66,7 @@ class MainViewBody extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
+                    spacing: 5.h,
                     children: [
                       SvgPicture.asset('assets/icons/upload_icon.svg'),
                       Text(
