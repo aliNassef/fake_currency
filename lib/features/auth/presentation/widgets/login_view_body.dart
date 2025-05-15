@@ -3,6 +3,8 @@ import 'package:fake_currency/core/shared_widgets/custom_text_form_field.dart';
 import 'package:fake_currency/core/shared_widgets/having_account.dart';
 import 'package:fake_currency/core/utils/app_colors.dart';
 import 'package:fake_currency/core/utils/app_styles.dart';
+import 'package:fake_currency/features/auth/presentation/view/signup_view.dart';
+import 'package:fake_currency/features/main/presentation/views/main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -28,37 +30,52 @@ class LoginViewBody extends StatelessWidget {
 
   Container _buildLoginForm(BuildContext context) {
     return Container(
-        height: context.height ,
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        width: context.width,
-        decoration: BoxDecoration(
-          color: AppColors.deepWhite,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
-        ),
-        child: Column(
-          spacing: 20.h,
-          children: [
-            SizedBox(height: 38.h),
-            CustomTextFormField(hintText: 'Email'),
-            CustomTextFormField(hintText: 'Password'),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                child: Text(
-                  'Forgot Password?',
-                  style: AppStyles.medium20.copyWith(color:AppColors.borderColor),
+      height: context.height,
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      width: context.width,
+      decoration: BoxDecoration(
+        color: AppColors.deepWhite,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
+      ),
+      child: Column(
+        spacing: 20.h,
+        children: [
+          SizedBox(height: 38.h),
+          CustomTextFormField(hintText: 'Email'),
+          CustomTextFormField(hintText: 'Password'),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              child: Text(
+                'Forgot Password?',
+                style: AppStyles.medium20.copyWith(
+                  color: AppColors.borderColor,
                 ),
-                onPressed: () {},
               ),
+              onPressed: () {},
             ),
-            DefaultAppButton(text: 'Login', onTap: () {}),
-            HavingAccount(
-              start: 'Don\'t have an account? ',
-              end: 'Register',
-              onTap: () {},
-            ),
-          ],
-        ),
-      );
+          ),
+          DefaultAppButton(
+            text: 'Login',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainView()),
+              );
+            },
+          ),
+          HavingAccount(
+            start: 'Don\'t have an account? ',
+            end: 'Register',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignupView()),
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
