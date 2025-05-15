@@ -1,9 +1,10 @@
-import 'package:fake_currency/features/main/presentation/views/main_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fake_currency/core/utils/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:device_preview/device_preview.dart';
+
+import 'features/main/presentation/views/detection_view.dart';
 
 void main() {
   runApp(
@@ -32,8 +33,9 @@ class FakeCurrency extends StatelessWidget {
               primaryColor: AppColors.primaryColor,
             ),
             debugShowCheckedModeBanner: false,
-            home: const MainView(),
+            home: const DetectionView(),
           ),
     );
   }
 }
+  

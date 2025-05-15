@@ -17,6 +17,7 @@ class MainView extends StatelessWidget {
 
   _buildAppBar() {
     return AppBar(
+      elevation: 0,
       backgroundColor: AppColors.primaryColor,
       title: Text(
         'Fake Currency Detection',
