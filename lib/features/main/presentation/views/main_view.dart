@@ -17,6 +17,7 @@ class MainView extends StatelessWidget {
 
   _buildAppBar() {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       backgroundColor: AppColors.primaryColor,
       title: Text(
