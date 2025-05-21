@@ -10,11 +10,13 @@ class CustomTextFormField extends StatefulWidget {
     required this.controller,
     this.validator,
     this.isPassword = false,
+    this.borderColor,
   });
   final String hintText;
   final String? Function(String?)? validator;
   final TextEditingController controller;
   final bool isPassword;
+  final Color? borderColor ;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -63,7 +65,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   OutlineInputBorder _buildBorderStyle() {
     return OutlineInputBorder(
       borderSide: BorderSide(
-        color: AppColors.borderColor.withValues(alpha: 0.7),
+        color: widget.borderColor == null ? AppColors.borderColor.withValues(alpha: 0.7) : widget.borderColor!,
       ),
       borderRadius: BorderRadius.circular(10),
     );
