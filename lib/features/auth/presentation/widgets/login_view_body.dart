@@ -4,6 +4,7 @@ import 'package:fake_currency/core/shared_widgets/having_account.dart';
 import 'package:fake_currency/core/utils/app_colors.dart';
 import 'package:fake_currency/core/utils/app_styles.dart';
 import 'package:fake_currency/features/auth/presentation/cubits/login_cubit/login_cubit.dart';
+import 'package:fake_currency/features/auth/presentation/view/forget_password_view.dart';
 import 'package:fake_currency/features/auth/presentation/view/signup_view.dart';
 import 'package:fake_currency/features/main/presentation/views/main_view.dart';
 import 'package:flutter/material.dart';
@@ -153,7 +154,12 @@ class _LoginViewBodyState extends State<LoginViewBody> {
           'Forgot Password?',
           style: AppStyles.medium20.copyWith(color: AppColors.borderColor),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ForgetPasswordView()),
+          );
+        },
       ),
     );
   }

@@ -35,7 +35,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         enabledBorder: _buildBorderStyle(),
         focusedBorder: _buildBorderStyle(),
         hintText: widget.hintText,
-        hintStyle: AppStyles.medium24.copyWith(color: AppColors.black),
+        hintStyle: AppStyles.regular16.copyWith(color: AppColors.black),
         suffixIcon:
             widget.isPassword
                 ? IconButton(

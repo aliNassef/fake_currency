@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:fake_currency/core/networking/exceptions.dart';
 import 'package:fake_currency/core/networking/failure.dart';
+import 'package:fake_currency/features/auth/data/models/forget_pass_model.dart';
 import 'package:fake_currency/features/auth/data/models/login_input_model.dart';
 import 'package:fake_currency/features/auth/data/models/login_model.dart';
 import 'package:fake_currency/features/auth/data/models/signup_input_model.dart';
@@ -52,6 +53,16 @@ class AuthRepoImpl extends AuthRepo {
       return Right(null);
     } on CustomException catch (e) {
       return Left(Failure(errMessage: e.errorMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ForgetPassModel>> forgetPass(String email) async {
+    try {
+      final result = await _authRemoteDatasource.forgetPass(email);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(Failure(errMessage: e.errorModel.errorMessage ?? ''));
     }
   }
 }
