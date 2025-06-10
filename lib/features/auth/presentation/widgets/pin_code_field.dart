@@ -2,27 +2,9 @@ import 'package:fake_currency/core/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
-class PinCodeField extends StatefulWidget {
-  const PinCodeField({super.key});
-
-  @override
-  State<PinCodeField> createState() => _PinCodeFieldState();
-}
-
-class _PinCodeFieldState extends State<PinCodeField> {
-  late TextEditingController textEditingController;
-  @override
-  void initState() {
-    super.initState();
-    textEditingController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    textEditingController.dispose();
-    super.dispose();
-  }
-
+class PinCodeField extends StatelessWidget {
+  const PinCodeField({super.key, required this.controller});
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return Pinput(
@@ -32,7 +14,7 @@ class _PinCodeFieldState extends State<PinCodeField> {
         }
         return null;
       },
-      controller: textEditingController,
+      controller: controller,
       length: 6,
       defaultPinTheme: PinTheme(
         width: 56,

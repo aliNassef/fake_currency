@@ -1,8 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:fake_currency/core/utils/app_colors.dart';
-import 'package:fake_currency/features/auth/presentation/view/reset_password_view.dart';
-import 'package:fake_currency/features/auth/presentation/view/signup_view.dart';
-import 'package:fake_currency/features/auth/presentation/view/verify_code_view.dart';
+import 'package:fake_currency/features/auth/presentation/view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -24,7 +22,7 @@ class FakeCurrency extends StatelessWidget {
               primaryColor: AppColors.primaryColor,
             ),
             debugShowCheckedModeBanner: false,
-            home: const ResetPasswordView(),
+            home: const LoginView(),
           ),
     );
   }

@@ -13,7 +13,8 @@ abstract class AuthRemoteDatasource {
   Future<SignupModel> signup(SignupInputModel input);
   Future<LoginModel> login(LoginInputModel input);
   Future<ForgetPassModel> forgetPass(String email);
-
+  Future<void> verifyCode(String code, String token);
+  Future<void> resetPassword(String password, String token);
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -56,6 +57,32 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       return ForgetPassModel.fromJson(response.data);
+    } else {
+      throw ServerException(ErrorModel.fromJson(response.data));
+    }
+  }
+
+  @override
+  Future<void> verifyCode(String code, String token) async {
+    final response = await _apiService.post(
+      EndPoints.verifyCode,
+      data: {"code": code, "token": token},
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return;
+    } else {
+      throw ServerException(ErrorModel.fromJson(response.data));
+    }
+  }
+
+  @override
+  Future<void> resetPassword(String password, String token) async {
+    final response = await _apiService.post(
+      '${EndPoints.resetPass}$token',
+      data: {"password": password},
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return;
     } else {
       throw ServerException(ErrorModel.fromJson(response.data));
     }

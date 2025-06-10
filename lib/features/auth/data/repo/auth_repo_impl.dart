@@ -65,4 +65,24 @@ class AuthRepoImpl extends AuthRepo {
       return Left(Failure(errMessage: e.errorModel.errorMessage ?? ''));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> verifyCode(String code, String token) async {
+    try {
+      await _authRemoteDatasource.verifyCode(code, token);
+      return Right(null);
+    } on ServerException catch (e) {
+      return Left(Failure(errMessage: e.errorModel.errorMessage ?? ''));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> resetPassword(String password, String token) async {
+    try {
+      await _authRemoteDatasource.resetPassword(password, token);
+      return Right(null);
+    } on ServerException catch (e) {
+      return Left(Failure(errMessage: e.errorModel.errorMessage ?? ''));
+    }
+  }
 }

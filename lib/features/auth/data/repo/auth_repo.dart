@@ -12,4 +12,6 @@ abstract class AuthRepo {
   Future<Either<Failure, LoginModel>> login(LoginInputModel input);
   Future<Either<Failure, void>> logout();
   Future<Either<Failure, ForgetPassModel>> forgetPass(String email);
+  Future<Either<Failure, void>> verifyCode(String code, String token);
+  Future<Either<Failure, void>> resetPassword(String password, String token);
 }

@@ -1,18 +1,41 @@
-
 import 'package:fake_currency/core/extensions/media_query_extension.dart';
+import 'package:fake_currency/core/helper/show_loading_box.dart';
+import 'package:fake_currency/features/auth/presentation/view/verify_code_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/helper/show_error_dialog.dart';
 import '../../../../core/shared_widgets/custom_text_form_field.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_styles.dart';
 import '../../../../core/shared_widgets/default_app_button.dart';
+import '../cubits/forget_password_cubit/forget_password_cubit.dart';
 
-class ForgetPasswordViewBody extends StatelessWidget {
+class ForgetPasswordViewBody extends StatefulWidget {
   const ForgetPasswordViewBody({super.key});
 
   @override
+  State<ForgetPasswordViewBody> createState() => _ForgetPasswordViewBodyState();
+}
+
+class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
+  late TextEditingController emailController;
+  @override
+  void initState() {
+    emailController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final cubit = context.read<ForgetPasswordCubit>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -34,12 +57,39 @@ class ForgetPasswordViewBody extends StatelessWidget {
         SizedBox(height: 6.h),
         CustomTextFormField(
           hintText: 'Enter your email address',
-          controller: TextEditingController(),
+          controller: emailController,
         ),
         SizedBox(height: 50.h),
-        DefaultAppButton(
-          text: 'Send code',
-          onTap: () {},
+        BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
+          listener: (context, state) {
+            if (state is ForgetPasswordLoaded) {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) => BlocProvider.value(
+                        value: cubit,
+                        child: VerifyCodeView(token: state.token),
+                      ),
+                ),
+              );
+            }
+
+            if (state is ForgetPasswordFailure) {
+              Navigator.pop(context);
+              showErrorDialog(context, state.errMessage);
+            }
+            if (state is ForgetPasswordLoading) {
+              showLoadingBox(context);
+            }
+          },
+          child: DefaultAppButton(
+            text: 'Send code',
+            onTap: () {
+              cubit.forgetPassword(emailController.text.trim());
+            },
+          ),
         ),
       ],
     );
