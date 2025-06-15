@@ -10,6 +10,10 @@ import '../../features/auth/data/repo/auth_repo_impl.dart';
 import '../../features/auth/presentation/cubits/forget_password_cubit/forget_password_cubit.dart';
 import '../../features/auth/presentation/cubits/login_cubit/login_cubit.dart';
 import '../../features/auth/presentation/cubits/signup_cubit/signup_cubit.dart';
+import '../../features/main/data/datasource/main_remote_datasource.dart';
+import '../../features/main/data/repo/main_repo.dart';
+import '../../features/main/data/repo/main_repo_impl.dart';
+import '../../features/main/presentation/controller/cubit/main_cubit.dart';
 import '../networking/dio_helper.dart';
 
 final injector = GetIt.instance;
@@ -17,6 +21,17 @@ final injector = GetIt.instance;
 void setupServiceLocator() {
   _setupExternal();
   _setupAuthFeature();
+  _setupMainFeature();
+}
+
+void _setupMainFeature() {
+  injector.registerFactory<MainCubit>(() => MainCubit(injector<MainRepo>()));
+  injector.registerFactory<MainRepo>(
+    () => MainRepoImpl(datasource: injector<MainRemoteDatasource>()),
+  );
+  injector.registerFactory<MainRemoteDatasource>(
+    () => MainRemoteDatasourceImpl(injector<ApiService>()),
+  );
 }
 
 void _setupExternal() async {

@@ -1,8 +1,8 @@
-import 'dart:io';
-
+import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
 import 'package:fake_currency/core/networking/exceptions.dart';
 import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'api_consumer.dart';
@@ -115,56 +115,44 @@ class DioHelper extends ApiService {
   }
 
   @override
-  Future postDataWithImage(
-    String path, {
-    dynamic data,
-    Map<String, dynamic>? queryParameters,
-    bool isFromData = false,
-  }) async {
-    dio.options.headers = {
-      "accept": "*/*",
-      "Content-Type": "multipart/form-data",
-    };
+  Future<dynamic> postDataWithImage({required XFile image}) async {
+    var _dio = Dio();
+    var formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(
+        image.path,
+        filename: image.name,
+        contentType: MediaType('image', 'jpeg'),
+      ),
+    });
+    _dio.options.headers['Content-Type'] = 'multipart/form-data';
+    _dio.options.headers['Accept'] = 'application/json';
+
+    _dio.interceptors.add(
+      PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: false,
+        error: true,
+        compact: true,
+        maxWidth: 90,
+        enabled: kDebugMode,
+        filter: (options, args) {
+          // don't print requests with uris containing '/posts'
+          if (options.path.contains('/posts')) {
+            return false;
+          }
+          // don't print responses with unit8 list data
+          return !args.isResponse || !args.hasUint8ListData;
+        },
+      ),
+    );
     try {
-      if (data is Map<String, dynamic> && data.containsKey('files')) {
-        final formData = FormData();
-        final files = data['files'] as List;
-
-        // Add files to formData
-        for (var file in files) {
-          if (file is File) {
-            formData.files.add(
-              MapEntry(
-                'files',
-                await MultipartFile.fromFile(
-                  file.path,
-                  filename: file.path.split('/').last,
-                ),
-              ),
-            );
-          }
-        }
-        // Add other fields to formData
-        data.forEach((key, value) {
-          if (key != 'files' && value != null) {
-            formData.fields.add(MapEntry(key, value.toString()));
-          }
-        });
-
-        final response = await dio.post(
-          path,
-          data: formData,
-          queryParameters: queryParameters,
-        );
-        return response;
-      } else {
-        final response = await dio.post(
-          path,
-          data: isFromData ? FormData.fromMap(data) : data,
-          queryParameters: queryParameters,
-        );
-        return response;
-      }
+      final response = await _dio.post(
+        'https://xzaaam-eg-currency.hf.space/detect',
+        data: formData,
+      );
+      return response;
     } on DioException catch (e) {
       handleDioException(e);
     }

@@ -1,3 +1,5 @@
+import 'package:image_picker/image_picker.dart';
+
 abstract class ApiService {
   Future<dynamic> get(
     String path, {
@@ -11,12 +13,6 @@ abstract class ApiService {
     bool isFromData = false,
   });
 
-  Future<dynamic> postDataWithImage(
-    String path, {
-    Object? data,
-    Map<String, dynamic>? queryParameters,
-    bool isFromData = false,
-  });
   Future<dynamic> patch(
     String path, {
     Object? data,
@@ -29,4 +25,5 @@ abstract class ApiService {
     Map<String, dynamic>? queryParameters,
     bool isFromData = false,
   });
+  Future<dynamic> postDataWithImage({required XFile image});
 }

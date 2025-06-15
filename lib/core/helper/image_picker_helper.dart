@@ -1,8 +1,7 @@
-import 'dart:io';
+import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
 
 abstract class ImagePickerHelper {
   // static void openImagePicker({
@@ -36,21 +35,18 @@ abstract class ImagePickerHelper {
   //   );
   // }
 
-  static Future<void> openGallery({
-    required ValueChanged<File> onGet,
-  }) async {
+  static Future<void> openGallery({required ValueChanged<XFile> onGet}) async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image != null) {
-      onGet(File(image.path));
+      onGet(image);
     }
   }
 
-  static Future<void> openCamera({
-    required ValueChanged<File> onGet,
-  }) async {
+  static Future<void> openCamera({required ValueChanged<XFile> onGet}) async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
     if (image != null) {
-      onGet(File(image.path));
+      log(image.path);
+      onGet(image);
     }
   }
 }

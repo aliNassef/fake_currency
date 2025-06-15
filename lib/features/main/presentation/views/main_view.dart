@@ -1,8 +1,11 @@
 import 'package:fake_currency/core/utils/app_colors.dart';
 import 'package:fake_currency/features/main/presentation/widgets/main_view_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/di/injection.dart';
 import '../../../../core/utils/app_styles.dart';
+import '../controller/cubit/main_cubit.dart';
 
 class MainView extends StatelessWidget {
   const MainView({super.key});
@@ -11,7 +14,12 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: SafeArea(child: MainViewBody()),
+      body: SafeArea(
+        child: BlocProvider(
+          create: (context) => injector<MainCubit>(),
+          child: MainViewBody(),
+        ),
+      ),
     );
   }
 
