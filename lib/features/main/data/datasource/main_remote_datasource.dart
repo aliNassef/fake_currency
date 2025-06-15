@@ -16,7 +16,7 @@ class MainRemoteDatasourceImpl implements MainRemoteDatasource {
     if (response.statusCode == 200) {
       return response.data['detected_classes'][0];
     } else {
-      throw ServerException(ErrorModel.fromJson(response.data));
+      throw ServerException(ErrorModel(errorMessage: response.data['detail']));
     }
   }
 }

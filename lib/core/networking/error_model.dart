@@ -3,8 +3,6 @@ class ErrorModel {
 
   ErrorModel({required this.errorMessage});
   factory ErrorModel.fromJson(Map jsonData) {
-    return ErrorModel(
-      errorMessage: jsonData["detail"][0]['msg'] ?? '',
-    );
+    return ErrorModel(errorMessage: jsonData['message']);
   }
 }
