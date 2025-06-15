@@ -11,6 +11,7 @@ import 'core/helper/custom_bloc_observer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferences.getInstance();
+  await ScreenUtil.ensureScreenSize();
   setupServiceLocator();
   Bloc.observer = CustomBlocObserver();
   runApp(
