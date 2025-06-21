@@ -17,3 +17,5 @@ final class MainError extends MainState {
   final String errMessage;
   MainError(this.errMessage);
 }
+
+final class MainLogout extends MainState {}

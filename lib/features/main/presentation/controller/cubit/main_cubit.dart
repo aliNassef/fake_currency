@@ -17,4 +17,9 @@ class MainCubit extends Cubit<MainState> {
       (success) => emit(MainSuccess(success, image)),
     );
   }
+
+  void logout() async {
+    await mainRepo.logout();
+    emit(MainLogout());
+  }
 }

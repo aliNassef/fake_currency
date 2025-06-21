@@ -4,6 +4,7 @@ import 'package:fake_currency/core/helper/image_picker_helper.dart';
 import 'package:fake_currency/core/helper/show_error_dialog.dart';
 import 'package:fake_currency/core/helper/show_loading_box.dart';
 import 'package:fake_currency/core/utils/app_styles.dart';
+import 'package:fake_currency/features/auth/presentation/view/login_view.dart';
 import 'package:fake_currency/features/main/presentation/controller/cubit/main_cubit.dart';
 import 'package:fake_currency/features/main/presentation/views/detection_view.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/shared_widgets/default_app_button.dart';
 import '../../../../core/utils/app_colors.dart';
 
 class MainViewBody extends StatelessWidget {
@@ -30,8 +32,10 @@ class MainViewBody extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder:
-                  (context) =>
-                      DetectionView(detectionModel: state. detectedClass, image: state.image),
+                  (context) => DetectionView(
+                    detectionModel: state.detectedClass,
+                    image: state.image,
+                  ),
             ),
             (route) => false,
           );
@@ -126,6 +130,25 @@ class MainViewBody extends StatelessWidget {
               ),
             ],
           ).withHorizontalPadding(20),
+         Spacer(),
+          BlocListener<MainCubit, MainState>(
+            listenWhen: (previous, current) => current is MainLogout,
+            listener: (context, state) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginView()),
+                (route) => false,
+              );
+            },
+            child: DefaultAppButton(
+              text: 'Logout',
+
+              onTap: () {
+                context.read<MainCubit>().logout();
+              },
+            ).withHorizontalPadding(16),
+          ),
+          SizedBox(height: 40.h),
         ],
       ),
     );
